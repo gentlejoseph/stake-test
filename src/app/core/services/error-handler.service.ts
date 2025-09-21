@@ -1,13 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
-export interface AppError {
-  message: string;
-  code?: string;
-  details?: any;
-  timestamp: Date;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -16,19 +9,12 @@ export class ErrorHandlerService {
 
   constructor() {}
 
-  async handleError(error: AppError | Error, showToast = true): Promise<void> {
+  async handleError(error: Error, showToast = true): Promise<void> {
     console.error('Application Error:', error);
 
     if (showToast) {
-      await this.showErrorToast(this.getErrorMessage(error));
+      await this.showErrorToast(error.message || 'An unexpected error occurred');
     }
-  }
-
-  private getErrorMessage(error: AppError | Error): string {
-    if ('message' in error) {
-      return error.message;
-    }
-    return 'An unexpected error occurred';
   }
 
   private async showErrorToast(message: string): Promise<void> {
@@ -57,17 +43,5 @@ export class ErrorHandlerService {
 
     // Wait for the toast to dismiss
     await toast.onDidDismiss();
-  }
-
-  async showInfoToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({
-      message,
-      duration: 2000,
-      position: 'top',
-      color: 'primary',
-      icon: 'information-circle',
-    });
-
-    await toast.present();
   }
 }

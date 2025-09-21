@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { APP_CONSTANTS } from '../constants/app.constants';
 import { Stock } from '../interfaces';
 
 @Injectable({
@@ -6,7 +7,6 @@ import { Stock } from '../interfaces';
 })
 export class LocalStorageService {
   private readonly RECENT_SEARCHES_KEY = 'stake_recent_searches';
-  private readonly MAX_RECENT_SEARCHES = 5;
 
   getRecentSearches(): Stock[] {
     try {
@@ -29,8 +29,8 @@ export class LocalStorageService {
       recentSearches.unshift(stock);
 
       // Keep only max items
-      if (recentSearches.length > this.MAX_RECENT_SEARCHES) {
-        recentSearches = recentSearches.slice(0, this.MAX_RECENT_SEARCHES);
+      if (recentSearches.length > APP_CONSTANTS.MAX_RECENT_SEARCHES) {
+        recentSearches = recentSearches.slice(0, APP_CONSTANTS.MAX_RECENT_SEARCHES);
       }
 
       localStorage.setItem(this.RECENT_SEARCHES_KEY, JSON.stringify(recentSearches));

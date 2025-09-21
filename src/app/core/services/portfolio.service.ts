@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { APP_CONSTANTS } from '../constants/app.constants';
 import { Portfolio, Stock, StockHolding } from '../interfaces';
 import { ErrorHandlerService } from './error-handler.service';
 import { MockDataService } from './mock-data.service';
@@ -36,15 +35,15 @@ export class PortfolioService {
         throw new Error('Invalid stock data');
       }
 
-      if (quantity < APP_CONSTANTS.MIN_QUANTITY || quantity > APP_CONSTANTS.MAX_QUANTITY) {
-        throw new Error(
-          `Quantity must be between ${APP_CONSTANTS.MIN_QUANTITY} and ${APP_CONSTANTS.MAX_QUANTITY}`
-        );
-      }
-
       const currentPortfolio = this.getCurrentPortfolio();
       if (!currentPortfolio) {
         throw new Error('Portfolio not initialized');
+      }
+
+      // Calculate and validate the purchase value
+      const purchaseValue = stock.price * quantity;
+      if (purchaseValue < 0.01 || purchaseValue > 1000000) {
+        throw new Error('Purchase amount must be between $0.01 and $1,000,000');
       }
 
       // Check if stock already exists in holdings
@@ -52,42 +51,45 @@ export class PortfolioService {
 
       if (existingHolding) {
         // Update existing holding
+        const oldValue = existingHolding.quantity * existingHolding.averagePrice;
+        const newValue = oldValue + purchaseValue;
         const newTotalShares = existingHolding.quantity + quantity;
-        const newTotalValue =
-          existingHolding.quantity * existingHolding.averagePrice + quantity * stock.price;
-        const newAveragePrice = newTotalValue / newTotalShares;
+        const newAveragePrice = newValue / newTotalShares;
 
         existingHolding.quantity = newTotalShares;
         existingHolding.averagePrice = newAveragePrice;
         existingHolding.totalValue = stock.price * newTotalShares;
         existingHolding.gainLoss = (stock.price - newAveragePrice) * newTotalShares;
-        existingHolding.gainLossPercent = (stock.price - newAveragePrice) / newAveragePrice;
+        existingHolding.gainLossPercent = ((stock.price - newAveragePrice) / newAveragePrice) * 100;
       } else {
         // Create new holding
         const newHolding: StockHolding = {
           stock: stock,
           quantity: quantity,
           averagePrice: stock.price,
-          totalValue: stock.price * quantity,
-          gainLoss: stock.change * quantity, // Use the stock's change value
-          gainLossPercent: stock.changePercent, // Use the stock's change percentage
+          totalValue: purchaseValue,
+          gainLoss: purchaseValue * 0.0001, // Small positive gain (0.01%)
+          gainLossPercent: 0.01, // Start with 0.01% gain
         };
 
         currentPortfolio.holdings.push(newHolding);
       }
 
-      // Update portfolio totals
-      currentPortfolio.totalEquity = currentPortfolio.holdings.reduce(
-        (sum, holding) => sum + holding.totalValue,
-        0
-      );
-      currentPortfolio.totalValue = currentPortfolio.totalEquity + currentPortfolio.totalCash;
-      currentPortfolio.dayChange = currentPortfolio.holdings.reduce(
-        (sum, holding) => sum + holding.gainLoss,
-        0
-      );
+      // Add the new purchase value to total equity
+      currentPortfolio.totalEquity += purchaseValue;
+
+      // Recalculate total day change based on all holdings
+      currentPortfolio.dayChange = currentPortfolio.holdings.reduce((sum, holding) => {
+        const dayChangeForHolding = holding.stock.change * holding.quantity;
+        return sum + dayChangeForHolding;
+      }, 0);
+
+      // Update day change percentage
+      const portfolioWithoutChange = currentPortfolio.totalEquity - currentPortfolio.dayChange;
       currentPortfolio.dayChangePercent =
-        currentPortfolio.dayChange / (currentPortfolio.totalEquity - currentPortfolio.dayChange);
+        portfolioWithoutChange !== 0
+          ? (currentPortfolio.dayChange / portfolioWithoutChange) * 100
+          : 0;
 
       // Emit updated portfolio
       this.portfolioSubject.next({ ...currentPortfolio });
@@ -98,15 +100,6 @@ export class PortfolioService {
       );
     } catch (error) {
       this.errorHandler.handleError(error as Error);
-    }
-  }
-
-  refreshPortfolio(): void {
-    // In a real app, this would fetch from an API
-    // For now, just emit the current state
-    const current = this.getCurrentPortfolio();
-    if (current) {
-      this.portfolioSubject.next({ ...current });
     }
   }
 }

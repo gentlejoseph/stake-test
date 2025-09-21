@@ -13,15 +13,6 @@ export class ModalService {
   orderModalVisible$ = this.orderModalVisible.asObservable();
   selectedStock$ = this.selectedStock.asObservable();
 
-  // Getters
-  get isOrderModalVisible(): boolean {
-    return this.orderModalVisible.value;
-  }
-
-  get currentSelectedStock(): Stock | null {
-    return this.selectedStock.value;
-  }
-
   // Methods
   openOrderModal(stock: Stock) {
     this.selectedStock.next(stock);
@@ -50,14 +41,6 @@ export class ModalService {
 
     // Clear the selected stock
     this.selectedStock.next(null);
-  }
-
-  toggleOrderModal(stock?: Stock) {
-    if (this.isOrderModalVisible) {
-      this.closeOrderModal();
-    } else if (stock) {
-      this.openOrderModal(stock);
-    }
   }
 
   // Force close modal (useful for external events)

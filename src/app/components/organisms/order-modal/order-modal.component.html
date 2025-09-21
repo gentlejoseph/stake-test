@@ -6,7 +6,7 @@
 >
   <!-- Modal Content -->
   <div
-    class="relative w-full max-w-sm bg-white rounded-t-20 rounded-b-40 h-96"
+    class="relative w-full max-w-[95vw] bg-white rounded-t-20 rounded-b-40 h-96 flex flex-col"
     (click)="onModalContentClick($event)"
   >
     <!-- Stock Header -->
@@ -20,8 +20,8 @@
     </div>
 
     <!-- Form Inputs -->
-    <form [formGroup]="orderForm" class="w-full">
-      <div class="flex flex-col items-start gap-1 px-4 mt-6">
+    <form [formGroup]="orderForm" class="w-full mt-6 mb-16">
+      <div class="w-full mb-2">
         <!-- Price Input -->
         <app-input
           label="Price"
@@ -32,35 +32,35 @@
         ></app-input>
       </div>
 
-      <div class="flex flex-col items-start gap-1 px-4 mt-2">
+      <div class="w-full mb-2">
         <!-- Amount Input -->
         <app-input
           label="Amount"
-          type="text"
+          type="number"
           id="amount-input"
-          [placeholder]="(totalAmount | currency: 'USD' : 'symbol' : '1.2-2') ?? '$0.00'"
-          [disabled]="true"
+          formControlName="amount"
+          [required]="true"
+          [error]="'Please enter a valid amount (min $0.01)'"
+          placeholder="Enter amount to invest"
+          [min]="0.01"
+          [step]="0.01"
         ></app-input>
       </div>
 
-      <div class="flex flex-col items-start gap-1 px-4 mt-2">
+      <div class="w-full mb-2">
         <!-- Shares Input -->
         <app-input
           label="Shares"
           type="number"
-          formControlName="shares"
-          [required]="true"
-          [error]="'Please enter a valid number of shares (min 0.01)'"
-          placeholder="Enter number of shares"
           id="shares-input"
-          [min]="0.01"
-          [step]="0.01"
+          [placeholder]="(calculatedShares | number: '1.2-4') || '0.00'"
+          [disabled]="true"
         ></app-input>
       </div>
     </form>
 
     <!-- Swipe to Buy Button -->
-    <div class="px-4 mt-8">
+    <div class="px-4">
       <app-swipe-button (swiped)="onSwipeBuy()" [disabled]="!orderForm.valid || isAnimating">
         <svg
           icon
@@ -92,11 +92,6 @@
           />
         </svg>
       </app-swipe-button>
-    </div>
-
-    <!-- Home Indicator -->
-    <div class="absolute bottom-0 pb-2 transform -translate-x-1/2 left-1/2">
-      <div class="w-32 h-1 rounded-full bg-custom-black"></div>
     </div>
   </div>
 </div>

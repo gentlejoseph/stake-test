@@ -24,8 +24,7 @@
     <!-- Holdings Items -->
     <div
       *ngFor="let holding of holdings; let i = index"
-      (click)="onHoldingClick(holding.stock.symbol)"
-      class="grid grid-cols-12 gap-4 items-center py-2.5 w-full cursor-pointer hover:bg-gray-50 transition-colors"
+      class="grid grid-cols-12 gap-4 items-center py-2.5 w-full"
     >
       <!-- Stock Column -->
       <div class="col-span-6 flex gap-3 items-center min-w-0">
@@ -39,7 +38,7 @@
           </div>
           <div class="flex gap-0.5 items-start">
             <p class="text-xs font-medium text-gray-500 leading-tight tracking-wide">
-              {{ holding.quantity }}
+              {{ holding.quantity | number: '1.4-4' }}
             </p>
             <p class="text-xs font-medium text-gray-500 leading-tight tracking-wide">shares</p>
           </div>

@@ -12,10 +12,7 @@
       <app-main-price [portfolio]="portfolio"></app-main-price>
 
       <!-- Holdings Section -->
-      <app-holdings-list
-        [holdings]="portfolio.holdings"
-        (holdingClick)="navigateToStock($event)"
-      ></app-holdings-list>
+      <app-holdings-list [holdings]="portfolio.holdings"></app-holdings-list>
     </div>
   </div>
 

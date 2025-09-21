@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -51,7 +61,7 @@ import { SwipeButtonComponent } from '../../molecules/swipe-button/swipe-button.
     `,
   ],
 })
-export class OrderModalComponent {
+export class OrderModalComponent implements OnInit, OnChanges {
   private portfolioService = inject(PortfolioService);
   private errorHandler = inject(ErrorHandlerService);
   private loadingService = inject(LoadingService);
@@ -81,20 +91,44 @@ export class OrderModalComponent {
 
   constructor() {
     this.orderForm = this.fb.group({
-      shares: [5.1, [Validators.required, Validators.min(0.01)]],
-      amount: [{ value: 0, disabled: true }],
+      amount: [0, [Validators.required, Validators.min(0.01)]],
+      shares: [{ value: 0, disabled: true }],
     });
   }
 
-  get quantity() {
-    return this.orderForm.get('shares')?.value ?? 0;
+  get amount() {
+    return this.orderForm.get('amount')?.value ?? 0;
   }
 
-  // No initialization needed
+  get calculatedShares() {
+    if (this.stock && this.stock.price > 0) {
+      return this.amount / this.stock.price;
+    }
+    return 0;
+  }
+
+  ngOnInit() {
+    this.setupFormSubscriptions();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Reset form when modal becomes visible
+    if (changes['isVisible'] && changes['isVisible'].currentValue === true) {
+      this.resetForm();
+    }
+  }
+
+  private resetForm() {
+    this.orderForm.reset({
+      amount: 0,
+      shares: { value: 0, disabled: true },
+    });
+    this.totalAmount = 0;
+  }
 
   private setupFormSubscriptions() {
-    this.orderForm.get('shares')?.valueChanges.subscribe(() => {
-      this.calculateTotalAmount();
+    this.orderForm.get('amount')?.valueChanges.subscribe(() => {
+      this.calculateShares();
     });
   }
 
@@ -106,9 +140,10 @@ export class OrderModalComponent {
     }
   }
 
-  private calculateTotalAmount() {
-    if (this.stock) {
-      this.totalAmount = this.stock.price * this.quantity;
+  private calculateShares() {
+    if (this.stock && this.stock.price > 0) {
+      const shares = this.amount / this.stock.price;
+      this.totalAmount = this.amount;
     }
   }
 
@@ -246,7 +281,7 @@ export class OrderModalComponent {
 
     try {
       // Add the stock to portfolio first
-      this.portfolioService.addStock(this.stock, this.quantity);
+      this.portfolioService.addStock(this.stock, this.calculatedShares);
 
       // First emit completion to trigger parent updates
       this.orderCompleted.emit();

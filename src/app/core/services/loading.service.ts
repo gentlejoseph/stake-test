@@ -32,14 +32,4 @@ export class LoadingService {
       this.loadingElement = null;
     }
   }
-
-  async showWithPromise<T>(promise: Promise<T>, message = 'Loading...'): Promise<T> {
-    try {
-      await this.show(message);
-      const result = await promise;
-      return result;
-    } finally {
-      await this.hide();
-    }
-  }
 }

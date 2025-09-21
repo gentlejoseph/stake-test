@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Stock, Portfolio, StockHolding } from '../interfaces';
+import { Portfolio, Stock, StockHolding } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -99,8 +99,6 @@ export class MockDataService {
 
     return {
       totalEquity,
-      totalCash: 5000.0,
-      totalValue: totalEquity + 5000.0,
       dayChange: totalGainLoss,
       dayChangePercent: totalGainLoss / (totalEquity - totalGainLoss),
       holdings,

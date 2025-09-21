@@ -1,10 +1,40 @@
-# Stake Ionic Angular App
+# Stake Trading App
 
-A modern Ionic Angular application with Tailwind CSS, comprehensive tooling, and best practices.
+A modern Ionic Angular application for stock trading and portfolio management, built with Tailwind CSS and comprehensive tooling.
 
 ## 🚀 Features
 
+### Trading Features
+
+#### Stock Discovery
+
+Location: `src/app/pages/discover/discover.page.ts`
+
+- Mock stock search functionality (filters static data)
+- Recent search history with LocalStorage
+- Top volume stocks display (mock data)
+- Keyboard navigation in search results
+
+#### Portfolio Management
+
+Location: `src/app/pages/invest/invest.page.ts`
+
+- Current portfolio overview (mock data)
+- Static holdings list with calculated values
+- Basic performance tracking (simulated)
+- Portfolio value calculations
+
+#### Order Processing
+
+Location: `src/app/components/organisms/order-modal/order-modal.component.ts`
+
+- Interactive swipe-to-confirm UI
+- Static price display (mock data)
+- Basic order validation
+- Success/error simulation
+
 ### Core Technologies
+
 - **Ionic 8** - Latest Ionic framework with Angular integration
 - **Angular 20** - Latest Angular with standalone components
 - **Tailwind CSS 4** - Utility-first CSS framework
@@ -12,6 +42,7 @@ A modern Ionic Angular application with Tailwind CSS, comprehensive tooling, and
 - **Capacitor** - Native runtime for mobile apps
 
 ### Development Tools
+
 - **ESLint** - Advanced linting with Angular-specific rules
 - **Prettier** - Code formatting with Angular template support
 - **Husky** - Git hooks for pre-commit quality checks
@@ -19,6 +50,7 @@ A modern Ionic Angular application with Tailwind CSS, comprehensive tooling, and
 - **Angular CDK** - Headless/unstyled component library
 
 ### Code Quality
+
 - **Strict TypeScript** - Enhanced type safety and error detection
 - **Comprehensive ESLint** - Angular, TypeScript, and accessibility rules
 - **Pre-commit Hooks** - Automatic linting and formatting
@@ -37,6 +69,7 @@ npm install -g @ionic/cli
 ## 🛠️ Development
 
 ### Start Development Server
+
 ```bash
 npm start
 # or
@@ -44,6 +77,7 @@ ionic serve
 ```
 
 ### Build for Production
+
 ```bash
 npm run build
 # or
@@ -51,6 +85,7 @@ ionic build
 ```
 
 ### Code Quality Commands
+
 ```bash
 # Lint TypeScript and templates
 npm run lint
@@ -66,6 +101,7 @@ npm run format:check
 ```
 
 ### Testing
+
 ```bash
 npm test
 ```
@@ -73,6 +109,7 @@ npm test
 ## 📱 Mobile Development
 
 ### Add Platforms
+
 ```bash
 # Add iOS platform
 ionic capacitor add ios
@@ -82,6 +119,7 @@ ionic capacitor add android
 ```
 
 ### Build and Run
+
 ```bash
 # Build and run on iOS
 ionic capacitor run ios
@@ -93,6 +131,7 @@ ionic capacitor run android
 ## 🎨 Styling
 
 ### Tailwind CSS
+
 This project uses Tailwind CSS v4 with custom configuration for Ionic compatibility:
 
 - **Preflight disabled** - Preserves Ionic's CSS reset
@@ -101,26 +140,19 @@ This project uses Tailwind CSS v4 with custom configuration for Ionic compatibil
 - **Dark mode support** - Automatic dark mode with Ionic's system
 
 ### Usage Example
+
 ```html
-<div class="p-6 max-w-md mx-auto bg-white rounded-xl shadow-lg">
-  <ion-button class="mt-4 bg-primary-600">
-    Styled Button
-  </ion-button>
+<div class="max-w-md p-6 mx-auto bg-white shadow-lg rounded-xl">
+  <ion-button class="mt-4 bg-primary-600"> Styled Button </ion-button>
 </div>
 ```
-
-### Angular CDK
-Headless components available for advanced UI patterns:
-- Dialog/Modal management
-- Overlay positioning
-- Drag and drop
-- Virtual scrolling
-- Accessibility utilities
 
 ## 🔧 Configuration
 
 ### TypeScript Paths
+
 The project includes path mapping for cleaner imports:
+
 ```typescript
 import { SomeService } from '@core/services/some.service';
 import { SharedComponent } from '@shared/components/shared.component';
@@ -128,7 +160,9 @@ import { FeatureModule } from '@app/feature/feature.module';
 ```
 
 ### ESLint Rules
+
 Comprehensive linting configuration includes:
+
 - Angular-specific rules
 - TypeScript strict checking
 - Accessibility guidelines
@@ -136,7 +170,9 @@ Comprehensive linting configuration includes:
 - Import organization
 
 ### Pre-commit Hooks
+
 Automatic quality checks run before each commit:
+
 - ESLint with auto-fix
 - Prettier formatting
 - Staged file processing only
@@ -158,18 +194,21 @@ src/
 ## 🎯 Best Practices
 
 ### Component Development
+
 - Use standalone components by default
 - Implement OnPush change detection for performance
 - Follow Angular style guide conventions
 - Use TypeScript strict mode features
 
 ### Styling Approach
+
 - Prefer Tailwind utilities over custom CSS
 - Use Ionic components for mobile-specific UI
 - Maintain consistent spacing and typography
 - Test dark mode compatibility
 
 ### Code Quality
+
 - Write self-documenting code with clear naming
 - Add JSDoc comments for complex functions
 - Keep components focused and single-purpose
@@ -178,24 +217,24 @@ src/
 ## 🔍 VS Code Integration
 
 The project includes comprehensive VS Code settings:
+
 - Auto-formatting on save
 - ESLint integration with auto-fix
 - TypeScript enhanced support
 - Tailwind CSS IntelliSense
 - Recommended extensions list
 
-### Recommended Extensions
-See `.vscode/extensions.json` for the complete list of recommended extensions that enhance the development experience.
-
 ## 🚀 Deployment
 
 ### Web Deployment
+
 ```bash
 ionic build --prod
 # Deploy the www/ folder to your hosting service
 ```
 
 ### Mobile App Store
+
 ```bash
 # Build for production
 ionic build --prod

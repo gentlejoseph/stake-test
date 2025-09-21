@@ -22,20 +22,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
     `,
   ],
   template: `
-    <div class="w-full">
+    <div class="w-full px-4">
       <div
-        class="bg-white flex gap-3 h-12 items-center px-4 relative rounded w-full border border-gray-200 transition-all duration-200"
+        class="bg-white box-border content-stretch flex gap-3 h-[48px] items-center px-4 relative rounded-[4px] w-full border-[1.5px] border-[#e9e9e9] transition-all duration-200"
         [class.ring-1]="focused"
         [class.ring-primary-500]="focused && (!touched || valid)"
         [class.border-primary-500]="focused && (!touched || valid)"
         [class.ring-red-500]="focused && touched && !valid"
         [class.border-red-500]="touched && !valid"
       >
-        <div class="flex flex-col gap-0.5 grow items-start justify-center">
+        <div class="basis-0 content-stretch flex flex-col gap-0.5 grow items-start justify-center">
           <span
-            class="text-xs font-medium transition-colors duration-200"
+            class="text-xs font-medium leading-[1.3] text-[#7e7e7e] whitespace-pre transition-colors duration-200"
             [class.text-primary-500]="focused && (!touched || valid)"
-            [class.text-gray-500]="!focused || disabled"
             [class.text-red-500]="touched && !valid"
             >{{ label }}</span
           >
@@ -50,8 +49,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
             (blur)="onBlur()"
             [min]="min"
             [step]="step"
-            class="w-full bg-transparent text-sm outline-none transition-colors duration-200"
-            [class.text-custom-black]="!disabled"
+            class="w-full bg-transparent text-[13px] leading-[1.3] text-[#141414] outline-none whitespace-pre transition-colors duration-200"
             [class.text-gray-400]="disabled"
             [class.placeholder-gray-400]="!touched || valid"
             [class.placeholder-red-500]="touched && !valid"
