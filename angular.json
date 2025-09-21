@@ -28,6 +28,9 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/theme"]
+            },
             "assets": [
               {
                 "glob": "**/*",
@@ -122,14 +125,18 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"],
+            "eslintConfig": ".eslintrc.json"
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"]
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ],
+    "analytics": false
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {

@@ -1,0 +1,14 @@
+<div class="rounded-full flex items-center justify-center" [class]="sizeClasses">
+  <img
+    *ngIf="logo; else symbolFallback"
+    [src]="logo"
+    [alt]="symbol + ' logo'"
+    class="object-contain"
+    [class]="logoSizeClasses"
+  />
+  <ng-template #symbolFallback>
+    <span class="font-semibold text-gray-700" [class]="textSizeClasses">
+      {{ symbol.charAt(0) }}
+    </span>
+  </ng-template>
+</div>

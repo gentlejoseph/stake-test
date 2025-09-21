@@ -1,0 +1,19 @@
+<div class="bg-white pt-4">
+  <div class="text-left space-y-2">
+    <p class="text-sm text-custom-black font-medium">Total equity</p>
+    <p class="text-4xl font-bold text-custom-black mb-3">
+      {{ portfolio.totalEquity | currency: 'USD' : 'symbol' : '1.0-0' }}
+    </p>
+
+    <div class="flex items-center space-x-2">
+      <span class="text-lg font-semibold" [class]="getChangeClasses(portfolio.dayChange)">
+        {{ portfolio.dayChange >= 0 ? '+' : ''
+        }}{{ portfolio.dayChange | currency: 'USD' : 'symbol' : '1.2-2' }}
+      </span>
+      <span class="text-sm" [class]="getChangeClasses(portfolio.dayChange)">
+        ({{ portfolio.dayChange >= 0 ? '+' : ''
+        }}{{ portfolio.dayChangePercent | percent: '1.2-2' }})
+      </span>
+    </div>
+  </div>
+</div>

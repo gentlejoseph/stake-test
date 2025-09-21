@@ -1,0 +1,22 @@
+<div class="relative">
+  <div class="relative bg-gray-800 rounded-xl overflow-hidden">
+    <input
+      type="text"
+      [placeholder]="placeholder"
+      [(ngModel)]="searchQuery"
+      (input)="onSearchInput($event)"
+      (focus)="onSearchFocus()"
+      class="w-full px-4 py-3 pl-12 bg-gray-800 text-white placeholder-gray-400 border-none outline-none focus:ring-0"
+    />
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+      <ion-icon name="search" class="text-gray-400 text-lg"></ion-icon>
+    </div>
+    <button
+      *ngIf="searchQuery"
+      (click)="onSearchClear()"
+      class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-white"
+    >
+      <ion-icon name="close" class="text-lg"></ion-icon>
+    </button>
+  </div>
+</div>

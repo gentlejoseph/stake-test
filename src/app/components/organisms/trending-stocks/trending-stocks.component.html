@@ -1,0 +1,29 @@
+<div class="flex flex-col items-start w-full gap-4">
+  <!-- Section Header -->
+  <div class="flex items-center justify-between w-full">
+    <div class="flex items-center gap-1">
+      <h2 class="text-lg font-bold leading-tight tracking-wide text-custom-black">{{ title }}</h2>
+    </div>
+    <button
+      *ngIf="showSeeAll"
+      (click)="onSeeAllClick()"
+      class="flex items-center space-x-1 text-sm font-medium text-blue-400 hover:text-blue-300"
+    >
+      <span>See all</span>
+      <ion-icon name="chevron-forward" class="text-xs"></ion-icon>
+    </button>
+  </div>
+
+  <!-- Cards Container - Scrollable Carousel -->
+  <div class="flex items-start w-full gap-4 overflow-x-auto scrollbar-hide">
+    <app-stock-card
+      *ngFor="let stock of stocks"
+      [stock]="stock"
+      [size]="'Small'"
+      [showLogo]="true"
+      (cardClick)="onStockClick($event)"
+    ></app-stock-card>
+    <!-- Extra padding at the end to prevent last card from being cut off -->
+    <div class="flex-shrink-0 w-4"></div>
+  </div>
+</div>

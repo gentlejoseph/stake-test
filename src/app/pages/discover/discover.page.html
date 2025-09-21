@@ -1,0 +1,151 @@
+<ion-content [fullscreen]="true" class="bg-white">
+  <!-- Search Bar -->
+  <div class="px-6 pt-4 pb-8 mt-8">
+    <div class="flex items-center gap-2">
+      <div class="relative flex-1 h-10 bg-gray-100 rounded-3xl">
+        <input
+          type="text"
+          placeholder="Search stocks"
+          [(ngModel)]="searchQuery"
+          (input)="onSearchInput($event)"
+          (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()"
+          (keydown)="onSearchKeyDown($event)"
+          class="w-full h-full px-4 pl-12 text-sm placeholder-gray-500 bg-transparent border-none outline-none text-custom-black focus:ring-0"
+        />
+        <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+          <img
+            src="assets/icon/search.svg"
+            alt="Search"
+            width="22"
+            height="22"
+            class="text-gray-500"
+          />
+        </div>
+      </div>
+      <!-- Cancel Button -->
+      <button
+        *ngIf="isSearchFocused"
+        (click)="onCancelSearch()"
+        class="px-4 py-2 text-sm font-bold text-custom-black"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Results - Full Screen when searching -->
+  <div *ngIf="isSearching" class="px-6 py-4">
+    <div class="flex flex-col gap-1">
+      <div
+        *ngFor="let stock of searchResults; let i = index"
+        [attr.data-search-index]="i"
+        (click)="navigateToStock(stock.symbol)"
+        [class.bg-gray-100]="selectedSearchIndex === i"
+        class="flex items-center justify-between py-2 transition-colors cursor-pointer hover:bg-gray-50"
+      >
+        <div class="flex items-center min-w-0 gap-3 grow">
+          <app-stock-avatar [symbol]="stock.symbol" [logo]="stock.logo" size="sm">
+          </app-stock-avatar>
+          <div class="flex flex-col gap-0.5 items-start shrink-0">
+            <p class="text-sm font-medium text-custom-black">
+              {{ stock.symbol }}
+            </p>
+            <p class="text-xs text-gray-500">Company</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content - Hidden when searching -->
+  <div *ngIf="!isSearching">
+    <!-- No Search Results -->
+    <div class="px-6">
+      <div
+        *ngIf="isSearching && searchResults.length === 0 && searchQuery.length > 0"
+        class="flex flex-col gap-4"
+      >
+        <div class="p-6 bg-white rounded-2xl">
+          <div class="py-8 text-center">
+            <div class="mb-4 text-gray-400">
+              <ion-icon name="search" size="large"></ion-icon>
+            </div>
+            <h3 class="mb-2 text-lg font-medium text-gray-900">No results found</h3>
+            <p class="text-gray-500">Try searching for different stock symbols or company names.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Searches -->
+    <div class="px-6">
+      <div *ngIf="!isSearching && recentSearches.length > 0" class="flex flex-col gap-4">
+        <h2 class="text-lg font-bold text-custom-black">Recently searched</h2>
+        <div class="flex flex-col gap-1">
+          <div
+            *ngFor="let stock of recentSearches"
+            (click)="navigateToRecentStock(stock.symbol)"
+            class="flex items-center justify-between py-2.5 cursor-pointer hover:bg-gray-50 transition-colors"
+          >
+            <div class="flex items-center min-w-0 gap-3 grow">
+              <app-stock-avatar [symbol]="stock.symbol" [logo]="stock.logo" size="sm">
+              </app-stock-avatar>
+              <div class="flex flex-col gap-0.5 items-start shrink-0">
+                <p class="text-sm font-medium text-custom-black">
+                  {{ stock.symbol }}
+                </p>
+                <p class="text-xs text-gray-500">Volutpat trandg massasld mattis fringilla</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <div class="text-right">
+                <p class="text-sm font-medium text-custom-black">
+                  {{ stock.price | currency: 'USD' : 'symbol' : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Volume Stocks -->
+    <div class="px-6 pb-4 my-12">
+      <h2 class="mb-4 text-lg font-bold text-custom-black">Top 3 volume stock</h2>
+      <app-stock-card
+        *ngIf="topVolumeStocks[0]"
+        [stock]="topVolumeStocks[0]"
+        [size]="'Large'"
+        [showLogo]="true"
+        (cardClick)="navigateToStock($event)"
+      ></app-stock-card>
+    </div>
+
+    <!-- When no recent searches -->
+    <div class="px-6">
+      <div *ngIf="!isSearching && recentSearches.length === 0" class="flex flex-col gap-4">
+        <h2 class="text-lg font-bold text-custom-black">Recently searched</h2>
+        <div class="p-6 bg-white rounded-2xl">
+          <div class="py-8 text-center">
+            <div class="mb-4 text-gray-400">
+              <ion-icon name="trending-up" size="large"></ion-icon>
+            </div>
+            <h3 class="mb-2 text-lg font-medium text-gray-900">Discover new stocks</h3>
+            <p class="text-gray-500">
+              Search for stocks and companies to start building your watchlist.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Order Modal -->
+<app-order-modal
+  [isVisible]="isOrderModalVisible"
+  [stock]="selectedStock"
+  (modalClosed)="onOrderModalClosed()"
+  (orderCompleted)="onOrderCompleted()"
+></app-order-modal>

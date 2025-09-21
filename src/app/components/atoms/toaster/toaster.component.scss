@@ -1,0 +1,56 @@
+:host {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast-container {
+  pointer-events: auto;
+  width: 314px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 6px;
+  border: 1px solid rgba(19, 212, 166, 0.1);
+  background: #f1f8f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success {
+  color: #f1f8f9;
+}
+
+.error {
+  color: #ff4d4f;
+}
+
+.info {
+  color: #3b82f6;
+}
+
+.warning {
+  color: #f59e0b;
+}
+
+ion-icon {
+  display: none;
+}

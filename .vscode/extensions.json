@@ -1,5 +1,34 @@
 {
     "recommendations": [
-       "Webnative.webnative"
+        // Angular & Ionic
+        "Angular.ng-template",
+        "johnpapa.Angular2",
+        "ionic.ionic",
+        
+        // Code Quality & Formatting
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        
+        // TypeScript
+        "ms-vscode.vscode-typescript-next",
+        "usernamehw.errorlens",
+        
+        // Tailwind CSS
+        "bradlc.vscode-tailwindcss",
+        "heybourn.headwind",
+        
+        // Git & Version Control
+        "eamodio.gitlens",
+        
+        // General Development
+        "christian-kohler.path-intellisense",
+        "ms-vscode.vscode-json",
+        "formulahendry.auto-rename-tag",
+        "bradlc.vscode-tailwindcss",
+        
+        // Productivity
+        "ms-vscode.vscode-todo-highlight",
+        "streetsidesoftware.code-spell-checker",
+        "aaron-bond.better-comments"
     ]
 }

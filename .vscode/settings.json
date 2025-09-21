@@ -1,3 +1,61 @@
 {
-  "typescript.preferences.autoImportFileExcludePatterns": ["@ionic/angular/common", "@ionic/angular"]
+  "typescript.preferences.autoImportFileExcludePatterns": ["@ionic/angular/common", "@ionic/angular"],
+  
+  // Editor Settings
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  
+  // TypeScript Settings
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  
+  // Prettier Settings
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  
+  // File Explorer
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/www": true,
+    "**/dist": true
+  },
+  
+  // Tailwind CSS
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "typescript": "typescript"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "class[Name]*\\s*[:=]\\s*['\"][^'\"]*['\"]"]
+  ],
+  
+  // Angular Language Service
+  "angular.experimental-ivy": true,
+  "angular.enable-strict-mode-prompt": false
 }

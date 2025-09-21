@@ -1,0 +1,65 @@
+<div *ngIf="holdings.length > 0" class="flex flex-col gap-6 items-start w-full mt-12">
+  <!-- Section Header -->
+  <div class="flex items-center justify-between w-full">
+    <div class="flex items-center gap-1">
+      <h2 class="text-lg font-bold text-custom-black leading-tight tracking-wide">Holdings</h2>
+    </div>
+  </div>
+
+  <!-- Holdings Content -->
+  <div class="flex flex-col gap-1 items-start w-full">
+    <!-- Header Row -->
+    <div class="grid grid-cols-12 gap-4 w-full">
+      <div class="col-span-6">
+        <p class="text-xs font-medium text-gray-500 leading-tight tracking-wide">Stock</p>
+      </div>
+      <div class="col-span-3 text-right">
+        <p class="text-xs font-medium text-gray-500 leading-tight tracking-wide">Price</p>
+      </div>
+      <div class="col-span-3 text-right">
+        <p class="text-xs font-medium text-gray-500 leading-tight tracking-wide">Change</p>
+      </div>
+    </div>
+
+    <!-- Holdings Items -->
+    <div
+      *ngFor="let holding of holdings; let i = index"
+      (click)="onHoldingClick(holding.stock.symbol)"
+      class="grid grid-cols-12 gap-4 items-center py-2.5 w-full cursor-pointer hover:bg-gray-50 transition-colors"
+    >
+      <!-- Stock Column -->
+      <div class="col-span-6 flex gap-3 items-center min-w-0">
+        <app-stock-avatar [symbol]="holding.stock.symbol" [logo]="holding.stock.logo" size="sm">
+        </app-stock-avatar>
+        <div class="flex flex-col gap-0.5 items-start">
+          <div class="flex gap-1.5 items-center">
+            <p class="text-sm font-medium text-custom-black leading-tight tracking-wide">
+              {{ holding.stock.symbol }}
+            </p>
+          </div>
+          <div class="flex gap-0.5 items-start">
+            <p class="text-xs font-medium text-gray-500 leading-tight tracking-wide">
+              {{ holding.quantity }}
+            </p>
+            <p class="text-xs font-medium text-gray-500 leading-tight tracking-wide">shares</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Column -->
+      <div class="col-span-3 text-right">
+        <p class="text-xs font-medium text-custom-black leading-tight tracking-wide">
+          {{ holding.stock.price | currency: 'USD' : 'symbol' : '1.2-2' }}
+        </p>
+      </div>
+
+      <!-- Change Column -->
+      <div class="col-span-3 text-right">
+        <app-chip [value]="holding.gainLoss">
+          {{ holding.gainLossPercent >= 0 ? '+' : ''
+          }}{{ holding.gainLossPercent | percent: '1.1-1' }}
+        </app-chip>
+      </div>
+    </div>
+  </div>
+</div>

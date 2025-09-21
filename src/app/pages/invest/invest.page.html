@@ -1,0 +1,59 @@
+<ion-content [fullscreen]="true" class="bg-white">
+  <!-- Status Bar -->
+
+  <!-- Dashboard Header -->
+  <div class="px-6 py-4 mt-16">
+    <h1 class="text-2xl font-bold text-custom-black">Dashboard</h1>
+  </div>
+
+  <div class="px-6 space-y-6" *ngIf="!isLoading">
+    <!-- Main Price -->
+    <div *ngIf="portfolio">
+      <app-main-price [portfolio]="portfolio"></app-main-price>
+
+      <!-- Holdings Section -->
+      <app-holdings-list
+        [holdings]="portfolio.holdings"
+        (holdingClick)="navigateToStock($event)"
+      ></app-holdings-list>
+    </div>
+  </div>
+
+  <!-- Trending Stocks Section - Full Width -->
+  <div class="flex flex-col items-start w-full gap-4 mt-6" *ngIf="!isLoading">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between w-full px-6">
+      <div class="flex items-center gap-1">
+        <h2 class="text-lg font-bold leading-tight tracking-wide text-custom-black">
+          Trending stocks
+        </h2>
+      </div>
+    </div>
+
+    <!-- Cards Container - Scrollable Carousel -->
+    <div class="flex items-start w-full gap-4 px-6 overflow-x-auto scrollbar-hide">
+      <app-stock-card
+        *ngFor="let stock of trendingStocks"
+        [stock]="stock"
+        [size]="'Small'"
+        [showLogo]="true"
+        (cardClick)="navigateToStock($event)"
+      ></app-stock-card>
+      <!-- Extra padding at the end to prevent last card from being cut off and allow infinite scroll -->
+      <div class="flex-shrink-0 w-4"></div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex items-center justify-center h-64">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+</ion-content>
+
+<!-- Order Modal -->
+<app-order-modal
+  [isVisible]="isOrderModalVisible"
+  [stock]="selectedStock"
+  (modalClosed)="onOrderModalClosed()"
+  (orderCompleted)="onOrderCompleted()"
+></app-order-modal>

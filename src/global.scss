@@ -1,37 +1,58 @@
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
+ * Minimal global styles for the financial app
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
 
-/* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  @apply bg-white text-custom-black;
+}
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Ionic component overrides */
+ion-content {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  @apply bg-white;
+}
+
+ion-tab-bar {
+  @apply border-t border-gray-200 bg-white;
+}
+
+/* Custom utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
