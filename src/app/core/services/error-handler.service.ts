@@ -34,8 +34,7 @@ export class ErrorHandlerService {
       message,
       duration: 2000,
       position: 'top',
-      color: 'success',
-      cssClass: 'toast-container success',
+      cssClass: 'figma-success-toast',
       animated: true,
     });
 

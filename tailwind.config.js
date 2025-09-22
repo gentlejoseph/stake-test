@@ -10,12 +10,12 @@ module.exports = {
           700: '#1d4ed8',
         },
         success: {
-          500: '#22c55e',
+          500: '#13D4A6',
         },
         danger: {
           500: '#ef4444',
         },
-        'figma-green': '#22b692',
+        'brand-green': '#22b692',
         'custom-black': '#141414',
         'border-light': '#E3E3E3',
       },
@@ -23,13 +23,13 @@ module.exports = {
         sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       spacing: {
-        '3.5': '0.875rem', // 14px
-        '4.5': '1.125rem', // 18px
-        '2.5': '0.625rem', // 10px
+        3.5: '0.875rem', // 14px
+        4.5: '1.125rem', // 18px
+        2.5: '0.625rem', // 10px
       },
       borderRadius: {
-        '20': '20px',
-        '40': '40px',
+        20: '20px',
+        40: '40px',
       },
       boxShadow: {
         card: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',

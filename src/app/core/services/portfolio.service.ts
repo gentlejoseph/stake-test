@@ -93,11 +93,6 @@ export class PortfolioService {
 
       // Emit updated portfolio
       this.portfolioSubject.next({ ...currentPortfolio });
-
-      // Show success message
-      this.errorHandler.showSuccessToast(
-        `Successfully added ${quantity} shares of ${stock.symbol}`
-      );
     } catch (error) {
       this.errorHandler.handleError(error as Error);
     }

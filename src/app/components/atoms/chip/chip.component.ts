@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
 export type ChipVariant = 'positive' | 'negative' | 'neutral' | 'info';
@@ -17,7 +17,7 @@ export class ChipComponent {
   getVariantClasses(): string {
     if (this.value !== undefined) {
       if (this.value > 0) {
-        return 'bg-figma-green border-figma-green';
+        return 'bg-brand-green border-brand-green';
       } else if (this.value < 0) {
         return 'bg-red-500 border-red-500';
       } else {
@@ -27,7 +27,7 @@ export class ChipComponent {
 
     switch (this.variant) {
       case 'positive':
-        return 'bg-figma-green border-figma-green';
+        return 'bg-brand-green border-brand-green';
       case 'negative':
         return 'bg-red-500 border-red-500';
       case 'info':
